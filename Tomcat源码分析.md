@@ -4,9 +4,11 @@
 
 ## 参考博客及书籍
 
-[看透springMvc源代码分析与实践.pdf](链接：http://pan.baidu.com/s/1o7Zp1Q6 密码：c87j)
+>  [看透springMvc源代码分析与实践.pdf](链接：http://pan.baidu.com/s/1o7Zp1Q6 密码：c87j)
 
-[Tomcat源码中ObjectName这个类的作用](http://blog.csdn.net/wgw335363240/article/details/6123665)
+>  [Tomcat源码中ObjectName这个类的作用](http://blog.csdn.net/wgw335363240/article/details/6123665)
+
+> 
 
 ## 1. conf/配置文件说明
 
@@ -776,7 +778,28 @@ JULI记录器使用默认日志配置，它默认地使用ConsoleHandler和fileH
 
 ## 2. 启动流程分析
 
-### 2.1 总体流程说明
+### 2.1 Idea调试Tomcat源码环境搭建
+
+首先下载Tomcat源码，读者可自行去[Tomcat官网](http://tomcat.apache.org/) 下载，若执行力差的同学也可直接从此处pull。
+
+Tomcat源码导入到开发工具中的方法有多种，笔者采用最直接的方式，解压源码包后直接导入到开发工具中，导入之后的源码并不能直接运行，还需要几个依赖包，读者可从此处的lib目录下获取，也可自行搜集。
+
+找好依赖包也并不能让Tomcat源码正常运行，还需要为Bootstrap这个启动类增加几个启动参数。
+
+```properties
+-Dcatalina.home=/Users/chenmin/GitHub/tomcat
+-Dcatalina.base=/Users/chenmin/GitHub/tomcat
+-Djava.endorsed.dirs=/Users/chenmin/GitHub/tomcat/endorsed
+-Djava.io.tmpdir=/Users/chenmin/GitHub/tomcat/temp
+-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+-Djava.util.logging.config.file=/Users/chenmin/GitHub/tomcat/conf/logging.properties
+```
+
+上面的参数具体代表的意思就不一一详述了，其实光看名字就知道都是干嘛用的了。
+
+以上准备步骤做好之后，就可以直接运行Bootstrap类，运行Tomcat源码进行调试了。
+
+### 2.2 总体流程说明
 
 在上面对配置文件的说明中，通过server.xml的解释，我们知道server.xml中最顶级的元素是server，而server.xml中的每一个元素我们都可以把它看做是Tomcat中的某一个部分。所以我们可以参照着server.xml来分析源码。
 
@@ -784,11 +807,21 @@ Tomcat最顶层的容器叫Server，它代表着整个Tomcat服务器。Server�
 
 一个Tomcat中只有一个Server，一个Server可以有多个Service来提供服务，一个Service只有一个Container，但是可以有多个Connector（一个服务可以有多个连接）。
 
+
+
 ### 2.2 源码分析
 
 #### 2.2.1 启动总体流程
 
-###### ![tomcat启动流程分析](E:\JavaEE\apache-tomcat-8.5.16-src\resources\images\tomcat启动流程分析.png)
+###### ![tomcat启动流程分析](https://github.com/ArtIsLong/apache-tomcat-8.5.16-src/blob/master/resources/images/tomcat%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90.png?raw=true)
 
-图片比较模糊，如需查看
+*注：*图片比较模糊，如需查看清晰图片，请自行下载resources/images目录中的**tomcat启动流程分析.png**
+
+#### 2.2.2 启动总体流程说明
+
+tomcat的入口类为Bootstrap.java类，全路径为：org.apache.catalina.startup.Bootstrap。
+
+
+
+
 

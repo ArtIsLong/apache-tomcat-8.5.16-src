@@ -4,9 +4,11 @@
 
 ## 参考博客及书籍
 
-[看透springMvc源代码分析与实践.pdf](链接：http://pan.baidu.com/s/1o7Zp1Q6 密码：c87j)
+>  [看透springMvc源代码分析与实践.pdf](链接：http://pan.baidu.com/s/1o7Zp1Q6 密码：c87j)
 
-[Tomcat源码中ObjectName这个类的作用](http://blog.csdn.net/wgw335363240/article/details/6123665)
+>  [Tomcat源码中ObjectName这个类的作用](http://blog.csdn.net/wgw335363240/article/details/6123665)
+
+> 
 
 ## 1. conf/配置文件说明
 
@@ -788,7 +790,7 @@ Tomcat最顶层的容器叫Server，它代表着整个Tomcat服务器。Server�
 
 #### 2.2.1 启动总体流程
 
-###### ![tomcat启动流程分析](E:\JavaEE\apache-tomcat-8.5.16-src\resources\images\tomcat启动流程分析.png)
+###### ![tomcat启动流程分析](https://github.com/ArtIsLong/apache-tomcat-8.5.16-src/blob/master/resources/images/tomcat%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90.png?raw=true)
 
-图片比较模糊，如需查看
+图片比较模糊，如需查看清晰图片，请
 
