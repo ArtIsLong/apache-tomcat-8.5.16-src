@@ -2,13 +2,39 @@
 
 # Tomcat源码分析
 
-## 参考博客及书籍
+## 参考书籍
 
 >  [看透springMvc源代码分析与实践.pdf](链接：http://pan.baidu.com/s/1o7Zp1Q6 密码：c87j)
 
->  [Tomcat源码中ObjectName这个类的作用](http://blog.csdn.net/wgw335363240/article/details/6123665)
+## Tomcat目录说明
 
-> 
+- bin
+
+  存放启动和关闭Tomcat的脚本文件
+
+- conf
+
+  存放Tomcat的各种配置文件
+
+- lib
+
+  存放Tomcat的依赖jar包
+
+- logs
+
+  存放Tomcat的日志文件
+
+- temp
+
+  存放Tomcat运行中产生的临时文件
+
+- webapps
+
+  web应用所在目录，即供外界访问的web资源的存放目录
+
+- work
+
+  Tomcat的工作目录
 
 ## 1. conf/配置文件说明
 
@@ -799,7 +825,9 @@ Tomcat源码导入到开发工具中的方法有多种，笔者采用最直接�
 
 以上准备步骤做好之后，就可以直接运行Bootstrap类，运行Tomcat源码进行调试了。
 
-### 2.2 总体流程说明
+### 2.2 Tomcat Server的组成
+
+#### 2.2.1 整体说明 
 
 在上面对配置文件的说明中，通过server.xml的解释，我们知道server.xml中最顶级的元素是server，而server.xml中的每一个元素我们都可以把它看做是Tomcat中的某一个部分。所以我们可以参照着server.xml来分析源码。
 
@@ -807,19 +835,125 @@ Tomcat最顶层的容器叫Server，它代表着整个Tomcat服务器。Server�
 
 一个Tomcat中只有一个Server，一个Server可以有多个Service来提供服务，一个Service只有一个Container，但是可以有多个Connector（一个服务可以有多个连接）。
 
+![tomcat整体结构](https://github.com/ArtIsLong/apache-tomcat-8.5.16-src/blob/master/resources/images/tomcat%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84.png?raw=true)
 
+#### 2.2.2 各组件详解
 
-### 2.2 源码分析
+可结合conf/配置文件说明中的server.xml的说明来看
 
-#### 2.2.1 启动总体流程
+- Server
+
+  Server代表整个Servlet容器
+
+- Service
+
+  Service是由一个或多个Connector以及一个Engine，负责处理所有Connector所获得的客户请求的集合。
+
+- Connector
+
+  Connector将在某个指定端口上侦听客户请求，并将获得的请求交给Engine来处理，从Engine处获得回应并返回给客户端。
+
+  Tomcat有两个默认的Connector，一个直接监听来自浏览器的http请求，一个监听来自其他WebServer的请求。
+
+  Coyote Http/1.1 Connector在端口8080上监听来自浏览器的http请求
+
+  Coyote AJP/1.3 Connector在端口8009上监听来自其他WebServer的servlet/jsp代理请求。
+
+- Engine
+
+  Engine下可以配置多个虚拟主机，每个虚拟主机都有一个域名，当Engine获得一个请求时，Engine会把该请求匹配到某个Host上，然后把该请求交给该Host来处理。
+
+  Engine有一个默认虚拟主机，当请求无法匹配到任何一个Host上的时候，将交给该默认Host来处理。
+
+- Host
+
+  代表一个虚拟主机，每个虚拟主机和某个网络域名相匹配。每个虚拟主机下都可以部署一个或者多个WebApp，每个WebApp对应于一个Context，有一个ContextPath。当Host获得一个请求时，将把该请求匹配到某个Context上，然后把该请求交给该Context来处理。匹配的方法是“最长匹配”，所以一个path==“”的Context将成为该Host的默认Context，所有无法和其他Context的路径名匹配的请求都将最终和该默认Context匹配。
+
+- Context
+
+  一个Context对应于一个Web Application（Web应用），一个Web应用有一个或多个Servlet组成，Context在创建的时候将根据配置文件\$CATALINA_HOME/conf/web.xml和\$WEBAPP_HOME/WEB-INF/web.xml载入Servlet类。如果找到，则执行该类，获得请求的回应，并返回。
+
+  Tomcat各组件关系图(此图来此网上)
+
+  ![QQ截图20170913174040](https://github.com/ArtIsLong/apache-tomcat-8.5.16-src/blob/master/resources/images/tomcat-startup.gif?raw=true)
+
+### 2.3 源码分析
+
+#### 2.3.1 启动总体流程
 
 ###### ![tomcat启动流程分析](https://github.com/ArtIsLong/apache-tomcat-8.5.16-src/blob/master/resources/images/tomcat%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90.png?raw=true)
 
-*注：*图片比较模糊，如需查看清晰图片，请自行下载resources/images目录中的**tomcat启动流程分析.png**
+*注：*图片比较模糊，如需查看清晰图片，请自行下载resources/images目录中的**tomcat启动流程分析.png** 或 resources/docs中的**Tomcat源码分析.mdl** ，使用Rational Rose等工具打开即可。
 
-#### 2.2.2 启动总体流程说明
+Tomcat里的Server由org.apache.catalina.startup.Catalina来管理，Catalina是整个Tomcat的管理类，它里面的三个方法load，start，stop分别用来管理整个服务器的生命周期，load方法用于根据conf/server.xml文件创建Server并调用Server的init方法进行初始化，start方法用于启动服务器，stop方法用于停止服务器，start和stop方法在内部分别调用了Server的start和stop方法，load方法内部调用了Server的init方法，这三个方法都会按容器的结构逐层调用相应的方法，比如，Server的start方法中会调用所有的Service中的start方法，Service中的start方法又会调用所有的Service中的start方法，Service中的start方法又会调用所有包含的Connectors和Container的start方法，这样这个服务器就启动了，init和stop方法也一样，这就是整个Tomcat的生命周期的管理方式。Catalina还有个await方法，await方法直接调用了Server的await方法，这个方法的作用是进入一个循环，让主线程不退出。
 
-tomcat的入口类为Bootstrap.java类，全路径为：org.apache.catalina.startup.Bootstrap。
+Tomcat的启动入口上面说过，是org.apache.catalina.startup.Bootstrap，作用类似于一个CatalinaAdaptor，具体的处理过程还是使用Catalina来完成的，这么做的好处是可以把启动的入口和具体的管理类分开，从而可以很方便的创建出多种启动方式，每种启动方式只需要写一个相应的CatalinaAdaptor就可以了。
+
+#### 2.3.2 启动流程详解
+
+正常情况下启动Tomcat，就是调用Bootstrap的main方法，代码如下：
+
+```java
+public static void main(String args[]) {
+        if (daemon == null) {
+            // Don't set daemon until init() has completed
+            // 初始化了ClassLoader，并用ClassLoader创建了Catalina实例，赋给catalinaDaemon变量
+            Bootstrap bootstrap = new Bootstrap();
+            try {
+                bootstrap.init();
+            } catch (Throwable t) {
+                handleThrowable(t);
+                t.printStackTrace();
+                return;
+            }
+            daemon = bootstrap;
+        } else {
+            // When running as a service the call to stop will be on a new
+            // thread so make sure the correct class loader is used to prevent
+            // a range of class not found exceptions.
+            Thread.currentThread().setContextClassLoader(daemon.catalinaLoader);
+        }
+        try {
+            String command = "start";
+            if (args.length > 0) {
+                command = args[args.length - 1];
+            }
+            if (command.equals("startd")) {
+                args[args.length - 1] = "start";
+                daemon.load(args);
+                daemon.start();
+            } else if (command.equals("stopd")) {
+                args[args.length - 1] = "stop";
+                daemon.stop();
+            } else if (command.equals("start")) {
+                daemon.setAwait(true);
+                daemon.load(args);
+                daemon.start();
+            } else if (command.equals("stop")) {
+                daemon.stopServer(args);
+            } else if (command.equals("configtest")) {
+                daemon.load(args);
+                if (null==daemon.getServer()) {
+                    System.exit(1);
+                }
+                System.exit(0);
+            } else {
+                log.warn("Bootstrap: command \"" + command + "\" does not exist.");
+            }
+        } catch (Throwable t) {
+            // Unwrap the Exception for clearer error reporting
+            if (t instanceof InvocationTargetException &&
+                    t.getCause() != null) {
+                t = t.getCause();
+            }
+            handleThrowable(t);
+            t.printStackTrace();
+            System.exit(1);
+        }
+    }
+```
+
+
 
 
 
