@@ -131,6 +131,15 @@
 					sequence   	"5.1"
 					ordinal    	6
 					quidu      	"000000000000"
+					creation   	FALSE)
+				    (object Message "Catalina.start"
+					quid       	"59BA175E036E"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"5.1.1.1.1.1.1.1.1"
+					ordinal    	13
+					quidu      	"000000000000"
 					creation   	FALSE)))
 			    (object Link
 				quid       	"5992761C0069"
@@ -160,8 +169,17 @@
 					frequency  	"Aperiodic"
 					synchronization 	"Simple"
 					dir        	"FromClientToSupplier"
-					sequence   	"5.1.1.1.1.1.1.1.1"
-					ordinal    	13
+					sequence   	"5.1.1.1.1.1.1.1.1.1"
+					ordinal    	14
+					quidu      	"000000000000"
+					creation   	FALSE)
+				    (object Message "StandardServer.await"
+					quid       	"59B9E08B00D9"
+					frequency  	"Aperiodic"
+					synchronization 	"Simple"
+					dir        	"FromClientToSupplier"
+					sequence   	"5.1.1.1.1.1.1.1.1.1.1.1.1.1"
+					ordinal    	18
 					quidu      	"000000000000"
 					creation   	FALSE))))
 			persistence 	"Persistent"
@@ -215,15 +233,6 @@
 					sequence   	"4"
 					ordinal    	3
 					quidu      	"000000000000"
-					creation   	FALSE)
-				    (object Message ""
-					quid       	"59B8A074032B"
-					frequency  	"Aperiodic"
-					synchronization 	"Return"
-					dir        	"ToClientFromSupplier"
-					sequence   	"5.1.1.1.1.1.1.1.1.1.1.1.1"
-					ordinal    	17
-					quidu      	"000000000000"
 					creation   	FALSE))))
 			persistence 	"Transient"
 			creationObj 	TRUE
@@ -267,8 +276,22 @@
 					frequency  	"Aperiodic"
 					synchronization 	"Simple"
 					dir        	"FromClientToSupplier"
-					sequence   	"5.1.1.1.1.1.1.1.1.1"
-					ordinal    	14
+					sequence   	"5.1.1.1.1.1.1.1.1.1.1"
+					ordinal    	15
+					quidu      	"000000000000"
+					creation   	FALSE)))
+			    (object Link
+				quid       	"59BA2A8A01FF"
+				supplier   	"BootStrap"
+				quidu      	"598BF44203C8"
+				messages   	(list Messages
+				    (object Message ""
+					quid       	"59BA2A8A0200"
+					frequency  	"Aperiodic"
+					synchronization 	"Return"
+					dir        	"FromClientToSupplier"
+					sequence   	"5.1.1.1.1.1.1.1.1.1.1.1.1.1.1"
+					ordinal    	19
 					quidu      	"000000000000"
 					creation   	FALSE))))
 			persistence 	"Transient"
@@ -305,8 +328,8 @@
 					frequency  	"Aperiodic"
 					synchronization 	"Simple"
 					dir        	"FromClientToSupplier"
-					sequence   	"5.1.1.1.1.1.1.1.1.1.1"
-					ordinal    	15
+					sequence   	"5.1.1.1.1.1.1.1.1.1.1.1"
+					ordinal    	16
 					quidu      	"000000000000"
 					creation   	FALSE)))
 			    (object Link
@@ -315,12 +338,12 @@
 				quidu      	"599257CD02B8"
 				messages   	(list Messages
 				    (object Message ""
-					quid       	"59B89EF201E2"
+					quid       	"59B9E07D037B"
 					frequency  	"Aperiodic"
 					synchronization 	"Return"
 					dir        	"FromClientToSupplier"
-					sequence   	"5.1.1.1.1.1.1.1.1.1.1.1"
-					ordinal    	16
+					sequence   	"5.1.1.1.1.1.1.1.1.1.1.1.1"
+					ordinal    	17
 					quidu      	"000000000000"
 					creation   	FALSE))))
 			persistence 	"Transient"
@@ -343,8 +366,8 @@
 		zoom       	100
 		max_height 	28350
 		max_width  	21600
-		origin_x   	0
-		origin_y   	6539
+		origin_x   	3185
+		origin_y   	2044
 		items      	(list diagram_item_list
 		    (object InterObjView "BootStrap" @2
 			location   	(824, 272)
@@ -371,7 +394,7 @@
 			fill_color 	13434879
 			quidu      	"598BF44203C8"
 			width      	300
-			height     	3081
+			height     	3276
 			icon_height 	0
 			icon_width 	0
 			icon_y_offset 	0
@@ -433,7 +456,7 @@
 			    y_coord    	0
 			    Nested     	FALSE)
 			Focus_Of_Control 	(object Focus_Of_Control "" @11
-			    location   	(824, 3173)
+			    location   	(824, 3368)
 			    line_color 	3342489
 			    InterObjView 	@2
 			    height     	90
@@ -464,7 +487,7 @@
 			fill_color 	13434879
 			quidu      	"599257CD02B8"
 			width      	300
-			height     	3063
+			height     	3258
 			icon_height 	0
 			icon_width 	0
 			icon_y_offset 	0
@@ -519,13 +542,20 @@
 			    y_coord    	105
 			    Nested     	FALSE)
 			Focus_Of_Control 	(object Focus_Of_Control "" @20
-			    location   	(1450, 3068)
+			    location   	(1450, 2650)
 			    line_color 	3342489
 			    InterObjView 	@12
-			    height     	105
-			    y_coord    	15
+			    height     	195
+			    y_coord    	105
+			    Nested     	TRUE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @21
+			    location   	(1450, 3158)
+			    line_color 	3342489
+			    InterObjView 	@12
+			    height     	195
+			    y_coord    	105
 			    Nested     	FALSE))
-		    (object InterObjView "StandardServer" @21
+		    (object InterObjView "StandardServer" @22
 			location   	(2188, 271)
 			font       	(object Font
 			    size       	10
@@ -537,7 +567,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@21
+			    Parent_View 	@22
 			    location   	(2188, 271)
 			    fill_color 	13434879
 			    anchor_loc 	1
@@ -550,40 +580,47 @@
 			fill_color 	13434879
 			quidu      	"5992634D01D9"
 			width      	300
-			height     	3082
+			height     	3277
 			icon_height 	0
 			icon_width 	0
 			icon_y_offset 	0
 			annotation 	1
-			Focus_Of_Control 	(object Focus_Of_Control "" @22
+			Focus_Of_Control 	(object Focus_Of_Control "" @23
 			    location   	(2188, 351)
 			    line_color 	3342489
-			    InterObjView 	@21
+			    InterObjView 	@22
 			    height     	90
 			    y_coord    	0
 			    Nested     	FALSE)
-			Focus_Of_Control 	(object Focus_Of_Control "" @23
+			Focus_Of_Control 	(object Focus_Of_Control "" @24
 			    location   	(2188, 1945)
 			    line_color 	3342489
-			    InterObjView 	@21
+			    InterObjView 	@22
 			    height     	195
 			    y_coord    	105
 			    Nested     	FALSE)
-			Focus_Of_Control 	(object Focus_Of_Control "" @24
+			Focus_Of_Control 	(object Focus_Of_Control "" @25
 			    location   	(2188, 2415)
 			    line_color 	3342489
-			    InterObjView 	@21
+			    InterObjView 	@22
 			    height     	105
 			    y_coord    	15
 			    Nested     	FALSE)
-			Focus_Of_Control 	(object Focus_Of_Control "" @25
-			    location   	(2188, 2625)
+			Focus_Of_Control 	(object Focus_Of_Control "" @26
+			    location   	(2188, 2755)
 			    line_color 	3342489
-			    InterObjView 	@21
+			    InterObjView 	@22
 			    height     	195
 			    y_coord    	105
+			    Nested     	FALSE)
+			Focus_Of_Control 	(object Focus_Of_Control "" @27
+			    location   	(2188, 3263)
+			    line_color 	3342489
+			    InterObjView 	@22
+			    height     	105
+			    y_coord    	15
 			    Nested     	FALSE))
-		    (object InterObjView "LifecycleBase" @26
+		    (object InterObjView "LifecycleBase" @28
 			location   	(2978, 268)
 			font       	(object Font
 			    size       	10
@@ -595,7 +632,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@26
+			    Parent_View 	@28
 			    location   	(2978, 268)
 			    fill_color 	13434879
 			    anchor_loc 	1
@@ -608,54 +645,54 @@
 			fill_color 	13434879
 			quidu      	"599290D20322"
 			width      	300
-			height     	3085
+			height     	3280
 			icon_height 	0
 			icon_width 	0
 			icon_y_offset 	0
 			annotation 	1
-			Focus_Of_Control 	(object Focus_Of_Control "" @27
+			Focus_Of_Control 	(object Focus_Of_Control "" @29
 			    location   	(2978, 348)
 			    line_color 	3342489
-			    InterObjView 	@26
+			    InterObjView 	@28
 			    height     	90
 			    y_coord    	0
 			    Nested     	FALSE)
-			Focus_Of_Control 	(object Focus_Of_Control "" @28
+			Focus_Of_Control 	(object Focus_Of_Control "" @30
 			    location   	(2978, 2050)
 			    line_color 	3342489
-			    InterObjView 	@26
+			    InterObjView 	@28
 			    height     	195
 			    y_coord    	105
 			    Nested     	FALSE)
-			Focus_Of_Control 	(object Focus_Of_Control "" @29
+			Focus_Of_Control 	(object Focus_Of_Control "" @31
 			    location   	(2978, 2180)
 			    line_color 	3342489
-			    InterObjView 	@26
+			    InterObjView 	@28
 			    height     	195
 			    y_coord    	105
 			    Nested     	TRUE)
-			Focus_Of_Control 	(object Focus_Of_Control "" @30
+			Focus_Of_Control 	(object Focus_Of_Control "" @32
 			    location   	(2978, 2310)
 			    line_color 	3342489
-			    InterObjView 	@26
+			    InterObjView 	@28
 			    height     	349
 			    y_coord    	259
 			    Nested     	TRUE)
-			Focus_Of_Control 	(object Focus_Of_Control "" @31
-			    location   	(2978, 2730)
+			Focus_Of_Control 	(object Focus_Of_Control "" @33
+			    location   	(2978, 2860)
 			    line_color 	3342489
-			    InterObjView 	@26
-			    height     	298
-			    y_coord    	208
+			    InterObjView 	@28
+			    height     	258
+			    y_coord    	168
 			    Nested     	FALSE)
-			Focus_Of_Control 	(object Focus_Of_Control "" @32
-			    location   	(2978, 2963)
+			Focus_Of_Control 	(object Focus_Of_Control "" @34
+			    location   	(2978, 3053)
 			    line_color 	3342489
-			    InterObjView 	@26
+			    InterObjView 	@28
 			    height     	105
 			    y_coord    	15
 			    Nested     	TRUE))
-		    (object NoteView @33
+		    (object NoteView @35
 			location   	(250, 375)
 			font       	(object Font
 			    size       	10
@@ -667,7 +704,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@33
+			    Parent_View 	@35
 			    location   	(34, 297)
 			    fill_color 	13434879
 			    nlines     	3
@@ -678,7 +715,7 @@
 			fill_color 	13434879
 			width      	457
 			height     	169)
-		    (object NoteView @34
+		    (object NoteView @36
 			location   	(356, 621)
 			font       	(object Font
 			    size       	10
@@ -690,7 +727,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@34
+			    Parent_View 	@36
 			    location   	(25, 515)
 			    fill_color 	13434879
 			    nlines     	4
@@ -704,7 +741,7 @@
 			fill_color 	13434879
 			width      	687
 			height     	225)
-		    (object NoteView @35
+		    (object NoteView @37
 			location   	(1309, 784)
 			font       	(object Font
 			    size       	10
@@ -716,7 +753,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@35
+			    Parent_View 	@37
 			    location   	(1093, 678)
 			    fill_color 	13434879
 			    nlines     	4
@@ -727,7 +764,7 @@
 			fill_color 	13434879
 			width      	456
 			height     	225)
-		    (object SelfMessView "static静态代码块" @36
+		    (object SelfMessView "static静态代码块" @38
 			location   	(0, 566)
 			font       	(object Font
 			    size       	10
@@ -738,8 +775,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @37
-			    Parent_View 	@36
+			label      	(object SegLabel @39
+			    Parent_View 	@38
 			    location   	(905, 507)
 			    font       	(object Font
 				size       	10
@@ -767,16 +804,16 @@
 			origin     	(840, 566)
 			terminus   	(990, 566)
 			ordinal    	0)
-		    (object AttachView "" @38
+		    (object AttachView "" @40
 			stereotype 	TRUE
 			line_color 	3342489
-			client     	@33
-			supplier   	@37
+			client     	@35
+			supplier   	@39
 			vertices   	(list Points
 			    (478, 420)
 			    (775, 480))
 			line_style 	0)
-		    (object SelfMessView "bootstrap.init" @39
+		    (object SelfMessView "bootstrap.init" @41
 			location   	(0, 760)
 			font       	(object Font
 			    size       	10
@@ -787,8 +824,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @40
-			    Parent_View 	@39
+			label      	(object SegLabel @42
+			    Parent_View 	@41
 			    location   	(900, 727)
 			    font       	(object Font
 				size       	10
@@ -816,16 +853,16 @@
 			origin     	(840, 760)
 			terminus   	(990, 760)
 			ordinal    	1)
-		    (object AttachView "" @41
+		    (object AttachView "" @43
 			stereotype 	TRUE
 			line_color 	3342489
-			client     	@34
-			supplier   	@40
+			client     	@36
+			supplier   	@42
 			vertices   	(list Points
 			    (699, 687)
 			    (771, 700))
 			line_style 	0)
-		    (object InterMessView "bootstrap.load" @42
+		    (object InterMessView "bootstrap.load" @44
 			location   	(0, 1250)
 			font       	(object Font
 			    size       	10
@@ -836,8 +873,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @43
-			    Parent_View 	@42
+			label      	(object SegLabel @45
+			    Parent_View 	@44
 			    location   	(1136, 1206)
 			    font       	(object Font
 				size       	10
@@ -865,7 +902,7 @@
 			origin     	(839, 1250)
 			terminus   	(1434, 1250)
 			ordinal    	3)
-		    (object SelfMessView "catalina.load(args)" @44
+		    (object SelfMessView "catalina.load(args)" @46
 			location   	(0, 1355)
 			font       	(object Font
 			    size       	10
@@ -876,8 +913,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @45
-			    Parent_View 	@44
+			label      	(object SegLabel @47
+			    Parent_View 	@46
 			    location   	(1572, 1312)
 			    font       	(object Font
 				size       	10
@@ -905,16 +942,16 @@
 			origin     	(1466, 1355)
 			terminus   	(1616, 1355)
 			ordinal    	4)
-		    (object AttachView "" @46
+		    (object AttachView "" @48
 			stereotype 	TRUE
 			line_color 	3342489
-			client     	@35
-			supplier   	@43
+			client     	@37
+			supplier   	@45
 			vertices   	(list Points
 			    (1261, 896)
 			    (1146, 1179))
 			line_style 	0)
-		    (object NoteView @47
+		    (object NoteView @49
 			location   	(1768, 1046)
 			font       	(object Font
 			    size       	10
@@ -926,7 +963,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@47
+			    Parent_View 	@49
 			    location   	(1421, 918)
 			    fill_color 	13434879
 			    nlines     	5
@@ -937,16 +974,16 @@
 			fill_color 	13434879
 			width      	719
 			height     	269)
-		    (object AttachView "" @48
+		    (object AttachView "" @50
 			stereotype 	TRUE
 			line_color 	3342489
-			client     	@45
-			supplier   	@47
+			client     	@47
+			supplier   	@49
 			vertices   	(list Points
 			    (1590, 1285)
 			    (1669, 1180))
 			line_style 	0)
-		    (object SelfMessView "bootstrap.setAwait" @49
+		    (object SelfMessView "bootstrap.setAwait" @51
 			location   	(0, 1034)
 			font       	(object Font
 			    size       	10
@@ -957,8 +994,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @50
-			    Parent_View 	@49
+			label      	(object SegLabel @52
+			    Parent_View 	@51
 			    location   	(913, 988)
 			    font       	(object Font
 				size       	10
@@ -986,7 +1023,7 @@
 			origin     	(840, 1034)
 			terminus   	(990, 1034)
 			ordinal    	2)
-		    (object NoteView @51
+		    (object NoteView @53
 			location   	(356, 897)
 			font       	(object Font
 			    size       	10
@@ -998,7 +1035,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@51
+			    Parent_View 	@53
 			    location   	(31, 791)
 			    fill_color 	13434879
 			    nlines     	4
@@ -1009,16 +1046,16 @@
 			fill_color 	13434879
 			width      	675
 			height     	225)
-		    (object AttachView "" @52
+		    (object AttachView "" @54
 			stereotype 	TRUE
 			line_color 	3342489
-			client     	@51
-			supplier   	@50
+			client     	@53
+			supplier   	@52
 			vertices   	(list Points
 			    (693, 950)
 			    (754, 961))
 			line_style 	0)
-		    (object SelfMessView "catalina.load()" @53
+		    (object SelfMessView "catalina.load()" @55
 			location   	(0, 1523)
 			font       	(object Font
 			    size       	10
@@ -1029,8 +1066,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @54
-			    Parent_View 	@53
+			label      	(object SegLabel @56
+			    Parent_View 	@55
 			    location   	(1541, 1479)
 			    font       	(object Font
 				size       	10
@@ -1058,7 +1095,7 @@
 			origin     	(1466, 1523)
 			terminus   	(1616, 1523)
 			ordinal    	5)
-		    (object NoteView @55
+		    (object NoteView @57
 			location   	(550, 1639)
 			font       	(object Font
 			    size       	10
@@ -1070,7 +1107,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@55
+			    Parent_View 	@57
 			    location   	(34, 1402)
 			    fill_color 	13434879
 			    nlines     	9
@@ -1081,16 +1118,16 @@
 			fill_color 	13434879
 			width      	1057
 			height     	487)
-		    (object AttachView "" @56
+		    (object AttachView "" @58
 			stereotype 	TRUE
 			line_color 	3342489
-			client     	@54
-			supplier   	@55
+			client     	@56
+			supplier   	@57
 			vertices   	(list Points
 			    (1383, 1504)
 			    (1078, 1553))
 			line_style 	0)
-		    (object SelfMessView "设置当前Catalina为StandardServer的Catalina对象，调用initStreams" @57
+		    (object SelfMessView "设置当前Catalina为StandardServer的Catalina对象，调用initStreams" @59
 			location   	(0, 1809)
 			font       	(object Font
 			    size       	10
@@ -1101,8 +1138,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @58
-			    Parent_View 	@57
+			label      	(object SegLabel @60
+			    Parent_View 	@59
 			    location   	(1503, 1685)
 			    font       	(object Font
 				size       	10
@@ -1130,7 +1167,7 @@
 			origin     	(1466, 1809)
 			terminus   	(1616, 1809)
 			ordinal    	6)
-		    (object InterMessView "调用StandardServer的init方法初始化Server" @59
+		    (object InterMessView "调用StandardServer的init方法初始化Server" @61
 			location   	(0, 1945)
 			font       	(object Font
 			    size       	10
@@ -1141,8 +1178,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @60
-			    Parent_View 	@59
+			label      	(object SegLabel @62
+			    Parent_View 	@61
 			    location   	(1818, 1901)
 			    font       	(object Font
 				size       	10
@@ -1164,13 +1201,13 @@
 			    orientation 	0)
 			line_color 	3342489
 			client     	@12
-			supplier   	@21
+			supplier   	@22
 			Focus_Src  	@18
-			Focus_Entry 	@23
+			Focus_Entry 	@24
 			origin     	(1465, 1945)
 			terminus   	(2172, 1945)
 			ordinal    	7)
-		    (object InterMessView "调用LifecycleBase的init方法初始化Server" @61
+		    (object InterMessView "调用LifecycleBase的init方法初始化Server" @63
 			location   	(0, 2050)
 			font       	(object Font
 			    size       	10
@@ -1181,8 +1218,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @62
-			    Parent_View 	@61
+			label      	(object SegLabel @64
+			    Parent_View 	@63
 			    location   	(2582, 2006)
 			    font       	(object Font
 				size       	10
@@ -1203,14 +1240,14 @@
 			    height     	45
 			    orientation 	0)
 			line_color 	3342489
-			client     	@21
-			supplier   	@26
-			Focus_Src  	@23
-			Focus_Entry 	@28
+			client     	@22
+			supplier   	@28
+			Focus_Src  	@24
+			Focus_Entry 	@30
 			origin     	(2203, 2050)
 			terminus   	(2962, 2050)
 			ordinal    	8)
-		    (object SelfMessView "lifecycleBase.init" @63
+		    (object SelfMessView "lifecycleBase.init" @65
 			location   	(0, 2155)
 			font       	(object Font
 			    size       	10
@@ -1221,8 +1258,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @64
-			    Parent_View 	@63
+			label      	(object SegLabel @66
+			    Parent_View 	@65
 			    location   	(3069, 2111)
 			    font       	(object Font
 				size       	10
@@ -1243,14 +1280,14 @@
 			    height     	45
 			    orientation 	0)
 			line_color 	3342489
-			client     	@26
-			supplier   	@26
-			Focus_Src  	@28
-			Focus_Entry 	@29
+			client     	@28
+			supplier   	@28
+			Focus_Src  	@30
+			Focus_Entry 	@31
 			origin     	(2994, 2155)
 			terminus   	(3144, 2155)
 			ordinal    	9)
-		    (object NoteView @65
+		    (object NoteView @67
 			location   	(2525, 1571)
 			font       	(object Font
 			    size       	10
@@ -1262,7 +1299,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@65
+			    Parent_View 	@67
 			    location   	(2084, 1418)
 			    fill_color 	13434879
 			    nlines     	6
@@ -1273,16 +1310,16 @@
 			fill_color 	13434879
 			width      	906
 			height     	319)
-		    (object AttachView "" @66
+		    (object AttachView "" @68
 			stereotype 	TRUE
 			line_color 	3342489
-			client     	@65
-			supplier   	@64
+			client     	@67
+			supplier   	@66
 			vertices   	(list Points
 			    (2686, 1730)
 			    (3042, 2084))
 			line_style 	0)
-		    (object SelfMessView "lifecycleBase.initInternal" @67
+		    (object SelfMessView "lifecycleBase.initInternal" @69
 			location   	(0, 2285)
 			font       	(object Font
 			    size       	10
@@ -1293,8 +1330,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @68
-			    Parent_View 	@67
+			label      	(object SegLabel @70
+			    Parent_View 	@69
 			    location   	(3069, 2241)
 			    font       	(object Font
 				size       	10
@@ -1315,14 +1352,14 @@
 			    height     	45
 			    orientation 	0)
 			line_color 	3342489
-			client     	@26
-			supplier   	@26
-			Focus_Src  	@29
-			Focus_Entry 	@30
+			client     	@28
+			supplier   	@28
+			Focus_Src  	@31
+			Focus_Entry 	@32
 			origin     	(2994, 2285)
 			terminus   	(3144, 2285)
 			ordinal    	10)
-		    (object InterMessView "调用StandardServer.initInternal进行初始化" @69
+		    (object InterMessView "调用StandardServer.initInternal进行初始化" @71
 			location   	(0, 2415)
 			font       	(object Font
 			    size       	10
@@ -1333,8 +1370,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @70
-			    Parent_View 	@69
+			label      	(object SegLabel @72
+			    Parent_View 	@71
 			    location   	(2583, 2371)
 			    font       	(object Font
 				size       	10
@@ -1355,14 +1392,14 @@
 			    height     	45
 			    orientation 	1)
 			line_color 	3342489
-			client     	@26
-			supplier   	@21
-			Focus_Src  	@30
-			Focus_Entry 	@24
+			client     	@28
+			supplier   	@22
+			Focus_Src  	@32
+			Focus_Entry 	@25
 			origin     	(2962, 2415)
 			terminus   	(2204, 2415)
 			ordinal    	11)
-		    (object NoteView @71
+		    (object NoteView @73
 			location   	(1566, 2193)
 			font       	(object Font
 			    size       	10
@@ -1374,7 +1411,7 @@
 			    color      	0
 			    default_color 	TRUE)
 			label      	(object ItemLabel
-			    Parent_View 	@71
+			    Parent_View 	@73
 			    location   	(1125, 2040)
 			    fill_color 	13434879
 			    nlines     	6
@@ -1389,16 +1426,16 @@
 			fill_color 	13434879
 			width      	906
 			height     	319)
-		    (object AttachView "" @72
+		    (object AttachView "" @74
 			stereotype 	TRUE
 			line_color 	3342489
-			client     	@71
-			supplier   	@24
+			client     	@73
+			supplier   	@25
 			vertices   	(list Points
 			    (1926, 2352)
 			    (2172, 2459))
 			line_style 	0)
-		    (object InterMessView "" @73
+		    (object InterMessView "" @75
 			location   	(0, 2520)
 			font       	(object Font
 			    size       	10
@@ -1409,8 +1446,8 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @74
-			    Parent_View 	@73
+			label      	(object SegLabel @76
+			    Parent_View 	@75
 			    location   	(1819, 2476)
 			    font       	(object Font
 				size       	10
@@ -1431,15 +1468,15 @@
 			    height     	45
 			    orientation 	1)
 			line_color 	3342489
-			client     	@21
+			client     	@22
 			supplier   	@12
-			Focus_Src  	@24
+			Focus_Src  	@25
 			Focus_Entry 	@19
 			origin     	(2172, 2520)
 			terminus   	(1466, 2520)
 			ordinal    	12)
-		    (object InterMessView "" @75
-			location   	(0, 2625)
+		    (object InterMessView "" @77
+			location   	(0, 2755)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1449,9 +1486,9 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @76
-			    Parent_View 	@75
-			    location   	(1818, 2581)
+			label      	(object SegLabel @78
+			    Parent_View 	@77
+			    location   	(1818, 2711)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1472,14 +1509,14 @@
 			    orientation 	0)
 			line_color 	3342489
 			client     	@12
-			supplier   	@21
-			Focus_Src  	@19
-			Focus_Entry 	@25
-			origin     	(1465, 2625)
-			terminus   	(2172, 2625)
-			ordinal    	13)
-		    (object InterMessView "LifecycleBase.start" @77
-			location   	(0, 2730)
+			supplier   	@22
+			Focus_Src  	@20
+			Focus_Entry 	@26
+			origin     	(1465, 2755)
+			terminus   	(2172, 2755)
+			ordinal    	14)
+		    (object InterMessView "LifecycleBase.start" @79
+			location   	(0, 2860)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1489,9 +1526,9 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @78
-			    Parent_View 	@77
-			    location   	(2582, 2686)
+			label      	(object SegLabel @80
+			    Parent_View 	@79
+			    location   	(2582, 2816)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1511,15 +1548,15 @@
 			    height     	45
 			    orientation 	0)
 			line_color 	3342489
-			client     	@21
-			supplier   	@26
-			Focus_Src  	@25
-			Focus_Entry 	@31
-			origin     	(2203, 2730)
-			terminus   	(2962, 2730)
-			ordinal    	14)
-		    (object SelfMessView "启动Server、Service、Engine、Host、Value、Realm、Connector、Listener、Resource等组件。" @79
-			location   	(0, 2938)
+			client     	@22
+			supplier   	@28
+			Focus_Src  	@26
+			Focus_Entry 	@33
+			origin     	(2203, 2860)
+			terminus   	(2962, 2860)
+			ordinal    	15)
+		    (object SelfMessView "启动Server、Service、Engine、Host、Value、Realm、Connector、Listener、Resource等组件。" @81
+			location   	(0, 3028)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1529,9 +1566,9 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object SegLabel @80
-			    Parent_View 	@79
-			    location   	(3045, 2855)
+			label      	(object SegLabel @82
+			    Parent_View 	@81
+			    location   	(3045, 2945)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1551,55 +1588,15 @@
 			    height     	84
 			    orientation 	0)
 			line_color 	3342489
-			client     	@26
-			supplier   	@26
-			Focus_Src  	@31
-			Focus_Entry 	@32
-			origin     	(2994, 2938)
-			terminus   	(3144, 2938)
-			ordinal    	15)
-		    (object InterMessView "" @81
-			location   	(0, 3068)
-			font       	(object Font
-			    size       	10
-			    face       	"Arial"
-			    bold       	FALSE
-			    italics    	FALSE
-			    underline  	FALSE
-			    strike     	FALSE
-			    color      	0
-			    default_color 	TRUE)
-			label      	(object SegLabel @82
-			    Parent_View 	@81
-			    location   	(2214, 3024)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    quidu      	"59B89EF201E2"
-			    anchor_loc 	1
-			    nlines     	1
-			    max_width  	80
-			    justify    	0
-			    label      	""
-			    pctDist    	0.500000
-			    height     	45
-			    orientation 	1)
-			line_color 	3342489
-			client     	@26
-			supplier   	@12
-			Focus_Src  	@32
-			Focus_Entry 	@20
-			origin     	(2962, 3068)
-			terminus   	(1466, 3068)
+			client     	@28
+			supplier   	@28
+			Focus_Src  	@33
+			Focus_Entry 	@34
+			origin     	(2994, 3028)
+			terminus   	(3144, 3028)
 			ordinal    	16)
 		    (object InterMessView "" @83
-			location   	(0, 3173)
+			location   	(0, 3158)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1611,7 +1608,7 @@
 			    default_color 	TRUE)
 			label      	(object SegLabel @84
 			    Parent_View 	@83
-			    location   	(1137, 3129)
+			    location   	(2214, 3114)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1621,7 +1618,7 @@
 				strike     	FALSE
 				color      	0
 				default_color 	TRUE)
-			    quidu      	"59B8A074032B"
+			    quidu      	"59B9E07D037B"
 			    anchor_loc 	1
 			    nlines     	1
 			    max_width  	450
@@ -1631,13 +1628,165 @@
 			    height     	45
 			    orientation 	1)
 			line_color 	3342489
+			client     	@28
+			supplier   	@12
+			Focus_Src  	@34
+			Focus_Entry 	@21
+			origin     	(2962, 3158)
+			terminus   	(1466, 3158)
+			ordinal    	17)
+		    (object InterMessView "StandardServer.await" @85
+			location   	(0, 3263)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @86
+			    Parent_View 	@85
+			    location   	(1818, 3219)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"59B9E08B00D9"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	460
+			    justify    	0
+			    label      	"StandardServer.await"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
 			client     	@12
+			supplier   	@22
+			Focus_Src  	@21
+			Focus_Entry 	@27
+			origin     	(1465, 3263)
+			terminus   	(2172, 3263)
+			ordinal    	18)
+		    (object NoteView @87
+			location   	(2754, 3377)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@87
+			    location   	(2319, 3183)
+			    fill_color 	13434879
+			    nlines     	7
+			    max_width  	834
+			    justify    	1
+			    label      	"await方法会直接调用Server的await方法，Server的await方法内部会执行一个while循环，这样程序就停到了await方法，当await方法里的while循环退出时，就会执行stop方法，从而关闭服务器。")
+			line_color 	3342489
+			fill_color 	13434879
+			width      	894
+			height     	400)
+		    (object AttachView "" @88
+			stereotype 	TRUE
+			line_color 	3342489
+			client     	@27
+			supplier   	@87
+			vertices   	(list Points
+			    (2203, 3315)
+			    (2306, 3327))
+			line_style 	0)
+		    (object SelfMessView "Catalina.start" @89
+			location   	(0, 2625)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @90
+			    Parent_View 	@89
+			    location   	(1541, 2581)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"59BA175E036E"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	316
+			    justify    	0
+			    label      	"Catalina.start"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			line_color 	3342489
+			client     	@12
+			supplier   	@12
+			Focus_Src  	@19
+			Focus_Entry 	@20
+			origin     	(1466, 2625)
+			terminus   	(1616, 2625)
+			ordinal    	13)
+		    (object InterMessView "" @91
+			location   	(0, 3368)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @92
+			    Parent_View 	@91
+			    location   	(1506, 3324)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    quidu      	"59BA2A8A0200"
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	""
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	1)
+			line_color 	3342489
+			client     	@22
 			supplier   	@2
-			Focus_Src  	@20
+			Focus_Src  	@27
 			Focus_Entry 	@11
-			origin     	(1434, 3173)
-			terminus   	(840, 3173)
-			ordinal    	17)))))
+			origin     	(2172, 3368)
+			terminus   	(840, 3368)
+			ordinal    	19)))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"598BC292038B"
 	physical_models 	(list unit_reference_list)
