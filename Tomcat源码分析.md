@@ -6,6 +6,10 @@
 
 >  [看透springMvc源代码分析与实践.pdf](链接：http://pan.baidu.com/s/1o7Zp1Q6 密码：c87j)
 
+## 推荐博客
+
+> [解析XML之Digester](http://www.jianshu.com/p/4cdc422b269b)
+
 ## Tomcat目录说明
 
 - bin
@@ -881,13 +885,13 @@ Tomcat最顶层的容器叫Server，它代表着整个Tomcat服务器。Server�
 
 #### 2.3.1 启动总体流程
 
-###### ![tomcat启动流程分析](https://github.com/ArtIsLong/apache-tomcat-8.5.16-src/blob/master/resources/images/tomcat%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90.png?raw=true)
-
-*注：*图片比较模糊，如需查看清晰图片，请自行下载resources/images目录中的**tomcat启动流程分析.png** 或 resources/docs中的**Tomcat源码分析.mdl** ，使用Rational Rose等工具打开即可。
-
 Tomcat里的Server由org.apache.catalina.startup.Catalina来管理，Catalina是整个Tomcat的管理类，它里面的三个方法load，start，stop分别用来管理整个服务器的生命周期，load方法用于根据conf/server.xml文件创建Server并调用Server的init方法进行初始化，start方法用于启动服务器，stop方法用于停止服务器，start和stop方法在内部分别调用了Server的start和stop方法，load方法内部调用了Server的init方法，这三个方法都会按容器的结构逐层调用相应的方法，比如，Server的start方法中会调用所有的Service中的start方法，Service中的start方法又会调用所有的Service中的start方法，Service中的start方法又会调用所有包含的Connectors和Container的start方法，这样这个服务器就启动了，init和stop方法也一样，这就是整个Tomcat的生命周期的管理方式。Catalina还有个await方法，await方法直接调用了Server的await方法，这个方法的作用是进入一个循环，让主线程不退出。
 
 Tomcat的启动入口上面说过，是org.apache.catalina.startup.Bootstrap，作用类似于一个CatalinaAdaptor，具体的处理过程还是使用Catalina来完成的，这么做的好处是可以把启动的入口和具体的管理类分开，从而可以很方便的创建出多种启动方式，每种启动方式只需要写一个相应的CatalinaAdaptor就可以了。
+
+![tomcat启动流程分析](https://github.com/ArtIsLong/apache-tomcat-8.5.16-src/blob/master/resources/images/tomcat%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90.png?raw=true)
+
+*注：*图片比较模糊，如需查看清晰图片，请自行下载resources/images目录中的**tomcat启动流程分析.png** 或 resources/docs中的**Tomcat源码分析.mdl** ，使用Rational Rose等工具打开即可。
 
 #### 2.3.2 启动流程详解
 
@@ -953,9 +957,296 @@ public static void main(String args[]) {
     }
 ```
 
+main方法中，首先执行init方法初始化了Tomcat自己的类加载器，并通过类加载器创建Catalina实例，然后赋给catalinaDaemon变量，后续操作都使用catalinaDaemon来执行。
 
+后面默认执行start命令，将调用setAwait(true)，load(args)和start()这三个方法，这三个方法内部都通过反射调用了Catalina的相应方法。
 
+```java
+// org.apache.catalina.startup.Catalina
+public void setAwait(boolean b) {
+    await = b;
+}
+```
 
+setAwait方法用于设置Server启动完成后是否进入等待状态的标志，如果为true则进入，否则不进入。
+
+```java
+// org.apache.catalina.startup.Catalina
+/**
+  * Start a new server instance.
+  */
+public void load() {
+    long t1 = System.nanoTime();
+    initDirs();
+    // Before digester - it may be needed
+    initNaming();
+    // Create and execute our Digester
+    Digester digester = createStartDigester();
+    InputSource inputSource = null;
+    InputStream inputStream = null;
+    File file = null;
+    try {
+        try {
+            file = configFile();
+            inputStream = new FileInputStream(file);
+            inputSource = new InputSource(file.toURI().toURL().toString());
+        } catch (Exception e) {
+          	if (log.isDebugEnabled()) {
+            	log.debug(sm.getString("catalina.configFail", file), e);
+          	}
+        }
+      	if (inputStream == null) {
+        	try {
+          		inputStream = getClass().getClassLoader().getResourceAsStream(getConfigFile());
+          		inputSource = new InputSource(getClass().getClassLoader().getResource(getConfigFile()).toString());
+        	} catch (Exception e) {
+          		if (log.isDebugEnabled()) {
+            		log.debug(sm.getString("catalina.configFail",getConfigFile()), e);
+          		}
+        	}
+      	}
+      	// This should be included in catalina.jar
+      	// Alternative: don't bother with xml, just create it manually.
+      	if (inputStream == null) {
+        	try {
+          		inputStream = getClass().getClassLoader().getResourceAsStream("server-embed.xml");
+          		inputSource = new InputSource(getClass().getClassLoader().getResource("server-embed.xml").toString());
+        	} catch (Exception e) {
+          		if (log.isDebugEnabled()) {
+            		log.debug(sm.getString("catalina.configFail","server-embed.xml"), e);
+          		}
+        	}	
+      }
+      if (inputStream == null || inputSource == null) {
+        	if  (file == null) {
+          		log.warn(sm.getString("catalina.configFail",getConfigFile() + "] or [server-embed.xml]"));
+        	} else {
+          		log.warn(sm.getString("catalina.configFail",file.getAbsolutePath()));
+          		if (file.exists() && !file.canRead()) {
+            		log.warn("Permissions incorrect, read permission is not allowed on the file.");
+          		}
+        	}
+        	return;
+      	}
+      	try {
+        	inputSource.setByteStream(inputStream);
+        	digester.push(this);
+        	digester.parse(inputSource);
+      	} catch (SAXParseException spe) {
+        	log.warn("Catalina.start using " + getConfigFile() + ": " + spe.getMessage());
+        	return;
+      	} catch (Exception e) {
+        	log.warn("Catalina.start using " + getConfigFile() + ": " , e);
+        	return;
+      	}
+    } finally {
+      	if (inputStream != null) {
+        	try {
+          		inputStream.close();
+        	} catch (IOException e) {
+          	// Ignore
+        	}
+      	}
+    }
+  	getServer().setCatalina(this);
+  	getServer().setCatalinaHome(Bootstrap.getCatalinaHomeFile());
+  	getServer().setCatalinaBase(Bootstrap.getCatalinaBaseFile());
+  	// Stream redirection
+  	initStreams();
+  	// Start the new server
+  	try {
+    	getServer().init();
+  	} catch (LifecycleException e) {
+    	if (Boolean.getBoolean("org.apache.catalina.startup.EXIT_ON_INIT_FAILURE")) {
+      		throw new java.lang.Error(e);
+    	} else {
+      		log.error("Catalina.start", e);
+    	}
+  	}
+  	long t2 = System.nanoTime();
+  	if(log.isInfoEnabled()) {
+    	log.info("Initialization processed in " + ((t2 - t1) / 1000000) + " ms");
+  	}
+}
+```
+
+Catalina的load方法根据conf/server.xml创建了Server对象，并赋值给server属性（具体是通过开源项目Digester完成的），然后调用了server的init方法。
+
+```java
+// org.apache.catalina.startup.Catalina
+public void start() {
+  	if (getServer() == null) {
+		load();
+	}
+    if (getServer() == null) {
+        log.fatal("Cannot start server. Server instance is not configured.");
+        return;
+    }
+    long t1 = System.nanoTime();
+    // Start the new server
+    try {
+        getServer().start();
+    } catch (LifecycleException e) {
+        log.fatal(sm.getString("catalina.serverStartFail"), e);
+        try {
+            getServer().destroy();
+        } catch (LifecycleException e1) {
+            log.debug("destroy() failed for failed Server ", e1);
+        }
+        return;
+    }
+    long t2 = System.nanoTime();
+    if(log.isInfoEnabled()) {
+        log.info("Server startup in " + ((t2 - t1) / 1000000) + " ms");
+    }
+    // Register shutdown hook
+    if (useShutdownHook) {
+        if (shutdownHook == null) {
+            shutdownHook = new CatalinaShutdownHook();
+        }
+        Runtime.getRuntime().addShutdownHook(shutdownHook);
+        // If JULI is being used, disable JULI's shutdown hook since
+        // shutdown hooks run in parallel and log messages may be lost
+        // if JULI's hook completes before the CatalinaShutdownHook()
+        LogManager logManager = LogManager.getLogManager();
+        if (logManager instanceof ClassLoaderLogManager) {
+            ((ClassLoaderLogManager) logManager).setUseShutdownHook(false);
+        }
+    }
+    if (await) {
+        await();
+        stop();
+    }
+}
+```
+
+这里首先判断Server是否已经存在了，如果不存在则调用load方法来初始化Server，然后调用Server的start方法来启动服务器，最后注册了关闭钩子并根据await属性判断是否进入等待状态，之前我们已经将这里的await属性设置为true，所以需要进入等待状态。进入等待状态会调用await和stop两个方法，await方法会直接调用Server的await方法，Server的await方法内部会执行一个while循环，这样程序就停到了await方法，当await方法里的while循环退出时，就会执行stop方法，从而关闭服务器。
+
+代码如下：
+
+```java
+// org.apache.catalina.core.StandardServer
+@Override
+public void await() {
+    // Negative values - don't wait on port - tomcat is embedded or we just don't like ports
+    if( port == -2 ) {
+        // undocumented yet - for embedding apps that are around, alive.
+        return;
+    }
+    if( port==-1 ) {
+        try {
+            awaitThread = Thread.currentThread();
+            while(!stopAwait) {
+                try {
+                    Thread.sleep( 10000 );
+                } catch( InterruptedException ex ) {
+                    // continue and check the flag
+                }
+            }
+        } finally {
+            awaitThread = null;
+        }
+        return;
+    }
+    // Set up a server socket to wait on
+    try {
+        awaitSocket = new ServerSocket(port, 1,InetAddress.getByName(address));
+    } catch (IOException e) {
+        log.error("StandardServer.await: create[" + address+ ":" + port+ "]: ", e);
+        return;
+    }
+    try {
+        awaitThread = Thread.currentThread();
+        // Loop waiting for a connection and a valid command
+        while (!stopAwait) {
+            ServerSocket serverSocket = awaitSocket;
+            if (serverSocket == null) {
+                break;
+            }
+            // Wait for the next connection
+            Socket socket = null;
+            StringBuilder command = new StringBuilder();
+            try {
+                InputStream stream;
+                long acceptStartTime = System.currentTimeMillis();
+                try {
+                    socket = serverSocket.accept();
+                    socket.setSoTimeout(10 * 1000);  // Ten seconds
+                    stream = socket.getInputStream();
+                } catch (SocketTimeoutException ste) {
+                    // This should never happen but bug 56684 suggests that
+                    // it does.
+                    log.warn(sm.getString("standardServer.accept.timeout",
+                                Long.valueOf(System.currentTimeMillis() - acceptStartTime)), ste);
+                    continue;
+                } catch (AccessControlException ace) {
+                    log.warn("StandardServer.accept security exception: " + ace.getMessage(), ace);
+                	continue;
+                } catch (IOException e) {
+                    if (stopAwait) {
+                        // Wait was aborted with socket.close()
+                        break;
+                    }
+                    log.error("StandardServer.await: accept: ", e);
+                    break;
+                }
+                // Read a set of characters from the socket
+                int expected = 1024; // Cut off to avoid DoS attack
+                while (expected < shutdown.length()) {
+                    if (random == null)
+                        random = new Random();
+                    expected += (random.nextInt() % 1024);
+                }
+                while (expected > 0) {
+                    int ch = -1;
+                    try {
+                        ch = stream.read();
+                    } catch (IOException e) {
+                        log.warn("StandardServer.await: read: ", e);
+                        ch = -1;
+                    }
+                    // Control character or EOF (-1) terminates loop
+                    if (ch < 32 || ch == 127) {
+                        break;
+                    }
+                    command.append((char) ch);
+                    expected--;
+                }
+            } finally {
+                // Close the socket now that we are done with it
+                try {
+                    if (socket != null) {
+                        socket.close();
+                    }
+                } catch (IOException e) {
+                    // Ignore
+                }
+            }
+            // Match against our command string
+            boolean match = command.toString().equals(shutdown);
+            if (match) {                					            
+              	log.info(sm.getString("standardServer.shutdownViaPort"));
+	        break;
+        } else
+                log.warn("StandardServer.await: Invalid command '" + command.toString() + "' received");
+        }
+    } finally {
+        ServerSocket serverSocket = awaitSocket;
+        awaitThread = null;
+        awaitSocket = null;
+        // Close the server socket and return
+        if (serverSocket != null) {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                // Ignore
+            }
+        }
+    }
+}
+```
+
+#### 
 
 
 
