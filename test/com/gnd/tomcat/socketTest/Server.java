@@ -14,7 +14,10 @@ public class Server {
             Socket socket = serverSocket.accept();
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            System.out.println(br.readLine());
+            char[] data = new char[102400];
+            br.read(data);
+            String str = new String(data);
+            System.out.println(str);
             bw.write("Hello, World!");
             bw.flush();
             bw.close();
